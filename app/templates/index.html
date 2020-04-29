@@ -10,7 +10,9 @@
     <div class="wrap1">
         <h1 class="page-title">一枚メモ</h1>
         <form action="{{ url_for('submit') }}" method="post" >
-        <textarea name="memo" class="box1" rows="15" cols="60" ></textarea>
+        
+        <textarea name="memo" class="box1" rows="15" cols="60" >{{ message }}</textarea>
+        
             <div class="container1"></div>
                 <p class="data1">最終更新日：2020/03/03 10:12:23</p>
                 <button class="button">保存</button>
