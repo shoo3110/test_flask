@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template
+import datetime
 app = Flask(__name__)
+
 
 
 @app.route('/')
@@ -14,5 +16,7 @@ def index():
 @app.route('/submit',methods=["POST"])
 def submit():
     message = request.form["memo"]
-    return render_template('send_post.html',message=message)
+    date = datetime.datetime.now()
+    update_date = date.strftime("%Y-%m-%d %H:%M")
+    return render_template('send_post.html',message=message, update_date=update_date)
 
