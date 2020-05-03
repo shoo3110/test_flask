@@ -1,13 +1,18 @@
 from flask import Flask, request, render_template
 app = Flask(__name__)
 
-comments=[]
 
 @app.route('/')
 def index():
-    message = 'sample_string'
+    path = 'static/kenji.txt'
+    with open(path) as f:
+        message = f.read()
+        print(type(message))
     return render_template('index.html',message=message)
 
-@app.route('/submit',methods=['Get','POST'])
+
+@app.route('/submit',methods=["POST"])
 def submit():
-    return 'You entered:{}'.format(request['memo'])
+    message = request.form["memo"]
+    return render_template('send_post.html',message=message)
+
