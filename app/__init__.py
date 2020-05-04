@@ -1,22 +1,41 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, url_for, render_template
 import datetime
+import os
 app = Flask(__name__)
 
 
+path = 'static/kenji.txt'
+path2 = 'static/date.csv'
 
-@app.route('/')
+
+@app.route('/', methods=['GET','POST'])
 def index():
-    path = 'static/kenji.txt'
-    with open(path) as f:
-        message = f.read()
-        print(type(message))
-    return render_template('index.html',message=message)
+        if request.method == 'POST':
+                f = open(path, mode='w')
+                message = request.form["memo"]
+                f.write(message)
+                print(type(message))
+                f.close()
+
+                d = open(path2, mode='w')
+                date = datetime.datetime.now()
+                update_date = date.strftime("%Y-%m-%d %H:%M")
+                d.write(update_date)
+                print(type(update_date))
+                d.close()
+                return render_template('index.html', message=message, update_date=update_date)
+        else:
+                f = open(path)
+                message = f.read()
+                print(type(message))
+                f.close()
+                d = open(path2)
+                update_date = d.read()
+                print(type(update_date))
+                d.close()
+                return render_template('index.html', message=message, update_date=update_date)
 
 
-@app.route('/submit',methods=["POST"])
-def submit():
-    message = request.form["memo"]
-    date = datetime.datetime.now()
-    update_date = date.strftime("%Y-%m-%d %H:%M")
-    return render_template('send_post.html',message=message, update_date=update_date)
 
+if __name__ == "__main__":
+    app.run()

@@ -9,7 +9,7 @@
 <body>
     <div class="wrap1">
         <h1 class="page-title">一枚メモ</h1>
-        <form action="{{ url_for('submit') }}" method="POST" >
+        <form action="{{url_for('index')}}" method="POST" >
         
         <textarea name="memo" class="box1" rows="20" cols="60" >{{ message }}</textarea>
         
